@@ -1,1 +1,117 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagens Dinâmicas</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    div {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      border: 1px solid red;
+      display: none; /* Esconde a imagem por padrão */
+    }
+  </style>
+</head>
+<body>
+  <div id="timeLabel">Horário: </div>
+  <img id="dynamicImage" alt="Imagem dinâmica">
+  <script>
+    const images = [
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image01.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image02.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image03.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image04.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image05.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image06.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image07.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image08.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image09.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image10.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image11.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image12.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image13.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image14.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image15.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image16.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image17.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image18.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image19.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image20.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image21.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image22.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image23.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image24.jpg",
+      "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image25.jpg",
+    ];
+
+    const imageElement = document.getElementById("dynamicImage");
+    const timeLabel = document.getElementById("timeLabel");
+
+    function getRandomImage() {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      return images[randomIndex];
+    }
+
+    function updateImage() {
+      const now = new Date();
+      const hour = now.getHours();
+
+      console.log("Hora atual:", hour); // Debug: mostra a hora atual no console
+
+      let displayTime = ""; // Horário correspondente para exibir
+      let selectedImage = ""; // Imagem correspondente
+
+      // Lógica de exibição de imagens e horários
+      if (hour >= 8 && hour < 10) {
+        displayTime = "10:00";
+        selectedImage = images[0];
+      } else if (hour >= 10 && hour < 12) {
+        displayTime = "12:00";
+        selectedImage = images[1];
+      } else if (hour >= 12 && hour < 15) {
+        displayTime = "15:00";
+        selectedImage = images[2];
+      } else if (hour >= 15 && hour < 19) {
+        displayTime = "19:00";
+        selectedImage = images[3];
+      } else if (hour >= 19 && hour < 21) {
+        displayTime = "21:00";
+        selectedImage = images[4];
+      } else {
+        // Fora dos horários definidos, exibe imagem aleatória
+        displayTime = "Horário aleatório";
+        selectedImage = getRandomImage();
+      }
+
+      // Atualiza o texto e a imagem
+      timeLabel.textContent = `Horário: ${displayTime}`;
+      imageElement.src = selectedImage;
+      imageElement.style.display = "block";
+
+      console.log("Imagem carregada:", selectedImage);
+    }
+
+    // Atualiza a imagem ao carregar a página
+    updateImage();
+
+    // Verifica e atualiza a cada minuto
+    setInterval(updateImage, 60000);
+  </script>
+</body>
+</html>
