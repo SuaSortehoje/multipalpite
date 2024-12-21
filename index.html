@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imagens Dinâmicas</title>
+  <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/palpite.jpg">
+    <link rel="icon" href="https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/palpite.jpg" type="image/jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>palpite diario</title>
   <style>
     body {
       display: flex;
@@ -12,17 +13,21 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background:black;
       margin: 0;
-      background-color: #f0f0f0;
+      background-color:black;
     }
     div {
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 10px;
+      z-index:2;
+      position: Absolute;
+      color:White;
+      margin-bottom: 150px;
     }
     img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80%;
       border: 1px solid red;
       display: none; /* Esconde a imagem por padrão */
     }
@@ -60,58 +65,65 @@
       "https://raw.githubusercontent.com/SuaSortehoje/multipalpite/refs/heads/main/image25.jpg",
     ];
 
-    const imageElement = document.getElementById("dynamicImage");
-    const timeLabel = document.getElementById("timeLabel");
+  const imageElement = document.getElementById("dynamicImage");
+  const timeLabel = document.getElementById("timeLabel");
 
-    function getRandomImage() {
-      const randomIndex = Math.floor(Math.random() * images.length);
-      return images[randomIndex];
+  let previousHour = null; // Armazena o horário anterior
+
+  function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  }
+
+  function updateImage() {
+    const now = new Date();
+    const hour = now.getHours();
+
+    // Apenas atualiza se o horário mudou
+    if (hour === previousHour) {
+      return;
     }
 
-    function updateImage() {
-      const now = new Date();
-      const hour = now.getHours();
+    previousHour = hour; // Atualiza o horário anterior
+    let displayTime = ""; // Horário correspondente para exibir
+    let selectedImage = ""; // Imagem correspondente
 
-      console.log("Hora atual:", hour); // Debug: mostra a hora atual no console
-
-      let displayTime = ""; // Horário correspondente para exibir
-      let selectedImage = ""; // Imagem correspondente
-
-      // Lógica de exibição de imagens e horários
-      if (hour >= 8 && hour < 10) {
-        displayTime = "10:00";
-        selectedImage = images[0];
-      } else if (hour >= 10 && hour < 12) {
-        displayTime = "12:00";
-        selectedImage = images[1];
-      } else if (hour >= 12 && hour < 15) {
-        displayTime = "15:00";
-        selectedImage = images[2];
-      } else if (hour >= 15 && hour < 19) {
-        displayTime = "19:00";
-        selectedImage = images[3];
-      } else if (hour >= 19 && hour < 21) {
-        displayTime = "21:00";
-        selectedImage = images[4];
-      } else {
-        // Fora dos horários definidos, exibe imagem aleatória
-        displayTime = "Horário aleatório";
-        selectedImage = getRandomImage();
-      }
-
-      // Atualiza o texto e a imagem
-      timeLabel.textContent = `Horário: ${displayTime}`;
-      imageElement.src = selectedImage;
-      imageElement.style.display = "block";
-
-      console.log("Imagem carregada:", selectedImage);
+    // Lógica de exibição de imagens e horários
+    if (hour >= 8 && hour < 10) {
+      displayTime = "10:00";
+      selectedImage = images[0];
+    } else if (hour >= 10 && hour < 12) {
+      displayTime = "12:00";
+      selectedImage = images[1];
+    } else if (hour >= 12 && hour < 15) {
+      displayTime = "15:00";
+      selectedImage = images[2];
+    } else if (hour >= 15 && hour < 19) {
+      displayTime = "19:00";
+      selectedImage = images[3];
+    } else if (hour >= 19 && hour < 21) {
+      displayTime = "21:00";
+      selectedImage = images[4];
+    } else {
+      // Fora dos horários definidos, exibe imagem aleatória
+      displayTime = "Horário aleatório";
+      selectedImage = getRandomImage();
     }
 
-    // Atualiza a imagem ao carregar a página
-    updateImage();
+    // Atualiza o texto e a imagem
+    timeLabel.textContent = `Horário: ${displayTime}`;
+    imageElement.src = selectedImage;
+    imageElement.style.display = "block";
 
-    // Verifica e atualiza a cada minuto
-    setInterval(updateImage, 60000);
-  </script>
+    console.log("Imagem carregada:", selectedImage);
+  }
+
+  // Atualiza a imagem ao carregar a página
+  updateImage();
+
+  // Verifica e atualiza a cada minuto
+  setInterval(updateImage, 60000);
+</script>
+
 </body>
 </html>
